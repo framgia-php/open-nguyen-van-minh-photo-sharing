@@ -13,8 +13,7 @@ class CreateLikeTable extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('like', function (Blueprint $table){
+        Schema::create('like', function (Blueprint $table) {
             $table->integer('user_id');
             $table->integer('image_id');
             $table->timestamps();
@@ -28,7 +27,6 @@ class CreateLikeTable extends Migration
      */
     public function down()
     {
-        //
         Schema::dropIfExists('like');
     }
 }

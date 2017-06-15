@@ -14,7 +14,6 @@ class AddAvatarCoverToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
             $table->string('avatar_photo')->after('password')->default('avatar.jpg');
             $table->string('cover_photo')->after('avatar_photo')->default('cover.jpg');
         });
@@ -28,7 +27,6 @@ class AddAvatarCoverToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
             $table->dropColumn('avatar_photo');
             $table->dropColumn('cover_photo');
         });

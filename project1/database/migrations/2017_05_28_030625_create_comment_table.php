@@ -13,8 +13,7 @@ class CreateCommentTable extends Migration
      */
     public function up()
     {
-        //
-        Schema::create('comment', function (Blueprint $table){
+        Schema::create('comment', function (Blueprint $table) {
             $table->integer('user_id');
             $table->integer('image_id');
             $table->string('comment',200);
@@ -29,7 +28,6 @@ class CreateCommentTable extends Migration
      */
     public function down()
     {
-        //
         Schema::dropIfExists('comment');
     }
 }
