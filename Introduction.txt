@@ -1,0 +1,8 @@
+Trang web quản lý ảnh với các chức năng
+1. Người dùng chưa đăng nhập: Xem ảnh, xem các bình luận
+2. Người dùng đã đăng nhập: Ngoài chức năng xem ảnh, xem bình luận, các user này còn có thể like ảnh,
+	đăng ảnh, bình luận các ảnh, chỉnh sửa và xóa ảnh mình đã đăng
+	
+Xây dựng:
+	Font-end: Bootstrap, jQuery
+	Back-end: PHP, Laravel
