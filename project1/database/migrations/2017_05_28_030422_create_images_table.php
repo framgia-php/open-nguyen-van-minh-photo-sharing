@@ -18,7 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('scope');
             $table->string('path');
             $table->string('description', 200)->nullable();
-            $table->string('like');
+            $table->integer('like');
             $table->integer('user_id');
             $table->timestamps();
         });
