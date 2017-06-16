@@ -11,12 +11,16 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $fillable = array('user_id','image_id','comment','created_at', 'updated_at');
+    protected $fillable = [
+        'user_id',
+        'image_id',
+        'comment',
+        'created_at',
+        'updated_at'
+    ];
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [];
-    public $timestamps = true;
 }
