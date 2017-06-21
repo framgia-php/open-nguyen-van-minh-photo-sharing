@@ -28,7 +28,8 @@ class Like extends Model
     public function getLikeByUserId($userId)
     {
         return Like::all()
-            ->where('user_id', $userId);
+            ->where('user_id', $userId)
+			->get()
     }
     public function isLike($userId, $imageId)
     {
@@ -36,5 +37,16 @@ class Like extends Model
             ['user_id', '=', $userId],
             ['image_id', '=', $imageId],
         ])->get();
+    }
+	public function deleteLikeByImageId($imageId)
+    {
+        if ($imageId) {
+            Like::where('image_id', $imageId)
+                ->delete();
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 }
