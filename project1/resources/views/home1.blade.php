@@ -55,42 +55,25 @@
             <br>
 
             <!-- Display like button -->
-            @if(count($tablelike) == 0)
-                @if(Auth::check())
-                <button id="like" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
-                {{$images[$i]['like'] }}
-                <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
-                </button>
-                @else
+            @if(!Auth::check())
                 <button id="guest" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
                 {{$images[$i]['like'] }}
                 <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
                 </button>
-                @endif
             @else
-            <?php $checklike = 0 ?>
-            @if(!Auth::check())
-            <button id="guest" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
-            {{$images[$i]['like'] }}
-            <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
-            </button>
-            @else
-                @foreach($tablelike as $like)
-                    @if($like['image_id'] == $images[$i]['image_id'])
-                        <button id="liked" name="{{ $images[$i]['image_id'] }}" class="btn btn-danger" style="font-size: 12px">
-                        {{ $images[$i]['like'] }}
-                        <?php $checklike = 1 ?>
-                        <i class="fa fa-heart-o" style="font-size:12px;color:white"></i>
-                        </button>
-                    @endif
-                @endforeach
-                @if($checklike == 0)
-                <button id="like" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
-                {{$images[$i]['like'] }}
-                <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
-                </button>
+                <!-- If user liked image -->
+                @if(count($like->isLike(Auth::user()->id, $images[$i]['image_id'])) == 1)
+                    <button id="liked" name="{{ $images[$i]['image_id'] }}" class="btn btn-danger" style="font-size: 12px">
+                    {{ $images[$i]['like'] }}
+                    <i class="fa fa-heart-o" style="font-size:12px;color:white"></i>
+                    </button>
+                <!-- else -->
+                @else
+                    <button id="like" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
+                    {{$images[$i]['like'] }}
+                    <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
+                    </button>
                 @endif
-            @endif
             @endif
 
             <!-- Display show comment and comment -->
@@ -164,43 +147,26 @@
             <br>
             <br>
 
-            <!-- Display like button -->
-            @if(count($tablelike) == 0)
-                @if(Auth::check())
-                <button id="like" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
-                {{$images[$i]['like'] }}
-                <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
-                </button>
-                @else
+             <!-- Display like button -->
+            @if(!Auth::check())
                 <button id="guest" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
                 {{$images[$i]['like'] }}
                 <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
                 </button>
-                @endif
             @else
-            <?php $checklike = 0 ?>
-            @if(!Auth::check())
-            <button id="guest" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
-            {{$images[$i]['like'] }}
-            <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
-            </button>
-            @else
-                @foreach($tablelike as $like)
-                    @if($like['image_id'] == $images[$i]['image_id'])
-                        <button id="liked" name="{{ $images[$i]['image_id'] }}" class="btn btn-danger" style="font-size: 12px">
-                        {{ $images[$i]['like'] }}
-                        <?php $checklike = 1 ?>
-                        <i class="fa fa-heart-o" style="font-size:12px;color:white"></i>
-                        </button>
-                    @endif
-                @endforeach
-                @if($checklike == 0)
-                <button id="like" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
-                {{$images[$i]['like'] }}
-                <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
-                </button>
+                <!-- If user liked image -->
+                @if(count($like->isLike(Auth::user()->id, $images[$i]['image_id'])) == 1)
+                    <button id="liked" name="{{ $images[$i]['image_id'] }}" class="btn btn-danger" style="font-size: 12px">
+                    {{ $images[$i]['like'] }}
+                    <i class="fa fa-heart-o" style="font-size:12px;color:white"></i>
+                    </button>
+                <!-- else -->
+                @else
+                    <button id="like" name="{{ $images[$i]['image_id'] }}" class="btn btn-default" style="font-size: 12px">
+                    {{$images[$i]['like'] }}
+                    <i class="fa fa-heart-o" style="font-size:12px;color:red"></i>
+                    </button>
                 @endif
-            @endif
             @endif
 
             <!-- Display show comment and comment -->
