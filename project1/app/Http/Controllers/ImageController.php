@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Image;
 use App\Models\Like;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
 class ImageController extends Controller
@@ -57,10 +58,70 @@ class ImageController extends Controller
             'images' => $images
         ]);
     }
-    public function test()
+    /* Phương thức show thông tin ảnh trước khi chỉnh sửa */
+    public function showImage(Request $request, Image $image)
     {
-        $userId = 2;
-        $imageId = 10;
-        dd(count(Like::isLike($userId, $imageId)));
+        $imageId = $request->id;
+        // Chỉ được phép chỉnh sửa nếu ảnh đúng là của user
+        if ($image->isImageBelongsUser($imageId, Auth::user()->id)) {
+            $image = $image->getImageById($imageId);
+            return view('editimage', [
+                'image' => $image
+            ]);
+        }
+        else {
+            return redirect('/error');
+        }
+    }
+    /* Phương thức cập nhật thông tin ảnh */
+    public function updateImage(Request $request, Image $image)
+    {
+        $scope = $request->scope;
+        $description = $request->description;
+        $imageId = $request->imageId;
+        // Chỉ cập nhật nếu ảnh đúng là của user
+        if ($image->isImageBelongsUser($imageId, Auth::user()->id)) {
+            if ($image->updateImage($imageId, $scope, $description)) {
+                return redirect('home');
+            }
+        }
+        else {
+            return redirect('error');
+        }
+    }
+    /* Phuowng thức show ảnh trước khi xóa */
+    public function isDeleteImage(Request $request, Image $image)
+    {
+        $imageId = $request->id;
+        // Kiểm tra quyền sở hữu ảnh ^^
+        if ($image->isImageBelongsUser($imageId, Auth::user()->id)) {
+            $image = $image->getImageById($imageId);
+            return view('deleteimage', [
+                'image' => $image
+            ]);
+        }
+        else {
+            return redirect('/error');
+        }
+    }
+    /* Phương thức xóa ảnh */
+    public function deleteImage(Request $request, Image $image, Comment $comment, Like $like)
+    {
+        $imageId = $request->imageId;
+        // Kiểm tra sở hữu ảnh
+        if ($image->isImageBelongsUser($imageId, Auth::user()->id)) {
+            // Xóa dữ liệu ảnh trong Image, Comment và Like
+            if (($image->deleteImage($imageId)) &&
+                ($comment->deleteCommentByImageId($imageId)) &&
+                ($like->deleteLikeByImageId($imageId)))
+                return redirect('home');
+            else {
+                return redirect('/error');
+            }
+        }
+        else {
+            return redirect('/error');
+        }
+
     }
 }
