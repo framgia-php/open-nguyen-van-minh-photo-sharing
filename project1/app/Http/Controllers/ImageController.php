@@ -57,10 +57,35 @@ class ImageController extends Controller
             'images' => $images
         ]);
     }
-    public function test()
+    /* Phương thức show thông tin ảnh trước khi chỉnh sửa */
+    public function showImage(Request $request, Image $image)
     {
-        $userId = 2;
-        $imageId = 10;
-        dd(count(Like::isLike($userId, $imageId)));
+        $imageId = $request->id;
+        // Chỉ được phép chỉnh sửa nếu ảnh đúng là của user
+        if ($image->isImageBelongsUser($imageId, Auth::user()->id)) {
+            $image = $image->getImageById($imageId);
+            return view('editimage', [
+                'image' => $image
+            ]);
+        }
+        else {
+            return redirect('/error');
+        }
+    }
+    /* Phương thức cập nhật thông tin ảnh */
+    public function updateImage(Request $request, Image $image)
+    {
+        $scope = $request->scope;
+        $description = $request->description;
+        $imageId = $request->imageId;
+        // Chỉ cập nhật nếu ảnh đúng là của user
+        if ($image->isImageBelongsUser($imageId, Auth::user()->id)) {
+            if ($image->updateImage($imageId, $scope, $description)) {
+                return redirect('home');
+            }
+        }
+        else {
+            return redirect('error');
+        }
     }
 }

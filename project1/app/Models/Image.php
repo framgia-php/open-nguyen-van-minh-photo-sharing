@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Image extends Model
 {
@@ -36,7 +37,58 @@ class Image extends Model
     }
     public function getImage()
     {
-        return Image::all();
+        return Image::orderBy('created_at', 'desc')
+            ->get();
+    }
+    public function postImage($scope, $description, $path, $userId)
+    {
+        Image::create([
+            'scope' => $scope,
+            'description' => $description,
+            'path' => $path,
+            'user_id' => $userId,
+            'like'  => '0',
+        ]);
+        return 1;
+    }
+    public function storeImage($userId)
+    {
+        if ($userId) {
+            return Image::where('user_id', $userId)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+        else {
+            return 0;
+        }
+    }
+    public function isImageBelongsUser($imageId, $userId)
+    {
+        $image = Image::find($imageId);
+        if (($image) && ($image->user_id === $userId)) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    public function getImageById($imageId)
+    {
+        return Image::where('image_id', $imageId)
+            ->first();
+    }
+    public function updateImage($imageId, $scope, $description)
+    {
+        $image = Image::find($imageId);
+        if ($image && $image->user_id === Auth::user()->id) {
+            $image->scope = $scope;
+            $image->description = $description;
+            $image->save();
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 
 }
