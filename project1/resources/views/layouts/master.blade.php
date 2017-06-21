@@ -85,29 +85,30 @@
 <nav id="nav" class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <ul class="nav navbar-nav">
-      <li id="trangchu"><a href="/project1/public/home" style="color: white">Trang chủ</a></li>
-      @yield('profile')
+        <li id="trangchu"><a href="/project1/public/home" style="color: white">Trang chủ</a></li>
+        @yield('profile')
 	    @if (Auth::check())
-      <li id="trangcanhan"><a href="/myapp/public/profile" style="color: white">
-      <img src="{{ url('/') . '/images/' . Auth::user()->avatar_photo }}" class="img-circle" alt="Cinque Terre" width="25" height="25"/> {{ Auth::user()->name }}</a></li>
-	     @endif
+        <li id="trangcanhan"><a href="#" style="color: white">
+        <img src="{{ url('/') . '/images/' . Auth::user()->avatar_photo }}" class="img-circle" alt="Cinque Terre" width="25" height="25"/> {{ Auth::user()->name }}</a></li>
+	    @endif
     </ul>
     <ul id="login" class="nav navbar-nav navbar-right">
-	@if(!Auth::check())
-      <li><a href="{{ route('register') }}" style="color: white"><span class="glyphicon glyphicon-user"></span> Đăng kí</a></li>
-      <li><a href="{{ route('login') }}" style="color: white"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
-	@else
-      <li>
-        <a href="{{ route('logout') }}" style="color:white" onclick="event.preventDefault();
-                     document.getElementById('logout-form').submit();">
-          Đăng xuất
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-          {{ csrf_field() }}
-        </form>
-      </li>
-  	  <div id="thongbao" style="background-color: white; margin-top: 50px; width: 200px"></div>
-	@endif
+    	@if(!Auth::check())
+          <li><a href="{{ route('register') }}" style="color: white"><span class="glyphicon glyphicon-user"></span> Đăng kí</a></li>
+          <li><a href="{{ route('login') }}" style="color: white"><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
+    	@else
+          <li>
+            <a href="{{ route('logout') }}" style="color:white" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                <span class="glyphicon glyphicon-user" ></span>
+                Đăng xuất
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              {{ csrf_field() }}
+            </form>
+          </li>
+      	  <div id="thongbao" style="background-color: white; margin-top: 50px; width: 200px"></div>
+    	@endif
     </ul>
   </div>
 </nav>
@@ -117,17 +118,17 @@
       <div class="container col-2" data-spy="affix">
         @if(Auth::check())
         <ul class="nav nav-pills nav-stacked">
-          <li id="danganh">
-            <a href="#"><i class="fa fa-camera" style="font-size:20px"></i> <span id="button_left"> Đăng ảnh </span></a>
-          </li>
-          <li id="khoanh">
-            <a href="#"><i class="fa fa-image" style="font-size:20px"></i> <span id="button_left"> Kho ảnh</span></a>
-          </li>
+            <li id="danganh">
+                <a href="/project1/public/chooseimage"><i class="fa fa-camera" style="font-size:20px"></i> <span id="button_left"> Đăng ảnh </span></a>
+            </li>
+            <li id="khoanh">
+                <a href="/project1/public/storeimage"><i class="fa fa-image" style="font-size:20px"></i> <span id="button_left"> Kho ảnh</span></a>
+            </li>
         </ul>
         @endif
         <div class="banquyen">
-          <p><i style="font-size:20px" class="fa">&#xf1f9;</i> 5/2017 Comita team- HUST </p>
-          <p>Web XXX</p>
+            <p><i style="font-size:20px" class="fa">&#xf1f9;</i> 5/2017 Comita team- HUST </p>
+            <p>Web XXX</p>
         </div>
       </div>
     </div>
