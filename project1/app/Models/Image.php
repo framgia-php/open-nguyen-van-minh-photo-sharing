@@ -74,8 +74,7 @@ class Image extends Model
     }
     public function getImageById($imageId)
     {
-        return Image::where('image_id', $imageId)
-            ->first();
+        return Image::find($imageId);
     }
     public function updateImage($imageId, $scope, $description)
     {
@@ -84,6 +83,18 @@ class Image extends Model
             $image->scope = $scope;
             $image->description = $description;
             $image->save();
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    public function deleteImage($imageId)
+    {
+        $image = Image::find($imageId);
+        if ($image && $image->user_id === Auth::user()->id) {
+            $image->delete();
+
             return 1;
         }
         else {

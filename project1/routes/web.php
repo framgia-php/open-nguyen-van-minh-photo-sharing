@@ -44,3 +44,5 @@ Route::post('updateimage', [
 Route::get('/error',function() {
    return view('error/404');
 });
+Route::get('deleteimage/{id}', 'ImageController@isDeleteImage');
+Route::post('deleteimage', 'ImageController@deleteImage');
