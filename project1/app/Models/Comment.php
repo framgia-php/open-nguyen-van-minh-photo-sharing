@@ -26,4 +26,15 @@ class Comment extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
+    public function deleteCommentByImageId($imageId)
+    {
+        if ($imageId) {
+            Comment::where('image_id', $imageId)
+                ->delete();
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
 }
